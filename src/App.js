@@ -6,7 +6,8 @@ const messages = [
 ];
 
 export default function App() {
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(1);
+  const [isOpen, setIsOpen] = useState(true);
   const [selectedUser, setSelectedUser] = useState(null);
 
   const userList = [
@@ -31,33 +32,38 @@ export default function App() {
   };
 
   return (
-    <div className="steps">
-      <div style={{ display: "flex", alignItems: 'center', gap: '20px', justifyContent: "center" }}>            <h2>Select a User</h2>
-        <select onChange={handleUserChange} style={{ height: '30px', backgroundColor: '#7950f2', color: '#fff', width: '130px' }}>
-          <option value="">Select a user</option>
-          {userList.map((user) => (
-            <option key={user.id} value={user.id}>
-              {user.name}
-            </option>
-          ))}
-        </select></div>
-      <p style={{ textAlign: "center", color: '#7950f2', fontWeight: "bold", fontSize: '20px' }}>{selectedUser ? `Welcome! ${selectedUser.name} from ${selectedUser.company}` : 'No user selected'} </p>
-      <div className="numbers">
-        <div className={step >= 1 ? 'active' : ''}>1</div>
-        <div className={step >= 2 ? 'active' : ''}>2</div>
-        <div className={step >= 3 ? 'active' : ''} >3</div>
-      </div>
-      <p className="message">Step {step} {messages[step - 1]}</p>
-      <div className="buttons">
-        <button style={{ backgroundColor: '#7950f2', color: '#fff' }}
-          onClick={handlePreviousClick}
+    <>
+      <button className="close" onClick={() => { setIsOpen(!isOpen) }}>{isOpen ? <span >&times;</span> : <span style={{ fontSize: '20px' }}>Click to View Multi Step</span>}</button>
+      {isOpen && (
 
-        >Previous</button>
-        <button style={{ backgroundColor: '#7950f2', color: '#fff' }}
-          onClick={handleNextClick}
-        >Next</button>
-      </div>
+        <div className="steps">
+          <div style={{ display: "flex", alignItems: 'center', gap: '20px', justifyContent: "center" }}>            <h2>Select a User</h2>
+            <select onChange={handleUserChange} style={{ height: '30px', backgroundColor: '#7950f2', color: '#fff', width: '130px' }}>
+              <option value="">Select a user</option>
+              {userList.map((user) => (
+                <option key={user.id} value={user.id}>
+                  {user.name}
+                </option>
+              ))}
+            </select></div>
+          <p style={{ textAlign: "center", color: '#7950f2', fontWeight: "bold", fontSize: '20px' }}>{selectedUser ? `Welcome! ${selectedUser.name} from ${selectedUser.company}` : 'No user selected'} </p>
+          <div className="numbers">
+            <div className={step >= 1 ? 'active' : ''}>1</div>
+            <div className={step >= 2 ? 'active' : ''}>2</div>
+            <div className={step >= 3 ? 'active' : ''} >3</div>
+          </div>
+          <p className="message">Step {step} {messages[step - 1]}</p>
+          <div className="buttons">
+            <button style={{ backgroundColor: '#7950f2', color: '#fff' }}
+              onClick={handlePreviousClick}
 
-    </div>
+            >Previous</button>
+            <button style={{ backgroundColor: '#7950f2', color: '#fff' }}
+              onClick={handleNextClick}
+            >Next</button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
