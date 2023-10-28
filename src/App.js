@@ -1,26 +1,47 @@
-import {useState} from "react";
+import { useState } from "react";
 const messages = [
   "Learn React ⚛️",
   "Apply for jobs 💼",
   "Invest your new income 🤑",
 ];
+
 export default function App() {
   const [step, setStep] = useState(1)
+  const [selectedUser, setSelectedUser] = useState(null);
 
-
+  const userList = [
+    { id: 1, name: 'Danish Ali', company: 'Cowlar' },
+    { id: 2, name: 'Jonas', company: 'Jonas.io' },
+    { id: 3, name: 'Khobaib', company: 'Devsinc' },
+  ];
   const handlePreviousClick = () => {
-    if(step >1){
-setStep(step-1);
+    if (step > 1) {
+      setStep(step - 1);
     }
   }
   const handleNextClick = () => {
-    if(step<3){
-      setStep(step+1);
+    if (step < 3) {
+      setStep(step + 1);
     }
   }
+  const handleUserChange = (e) => {
+    const selectedUserId = parseInt(e.target.value, 10);
+    setSelectedUser(userList.find((user) => user.id === selectedUserId));
+
+  };
 
   return (
     <div className="steps">
+      <div style={{ display: "flex", alignItems: 'center', gap: '20px', justifyContent: "center" }}>            <h2>Select a User</h2>
+        <select onChange={handleUserChange} style={{ height: '30px', backgroundColor: '#7950f2', color: '#fff', width: '130px' }}>
+          <option value="">Select a user</option>
+          {userList.map((user) => (
+            <option key={user.id} value={user.id}>
+              {user.name}
+            </option>
+          ))}
+        </select></div>
+      <p style={{ textAlign: "center", color: '#7950f2', fontWeight: "bold", fontSize: '20px' }}>{selectedUser ? `Welcome! ${selectedUser.name} from ${selectedUser.company}` : 'No user selected'} </p>
       <div className="numbers">
         <div className={step >= 1 ? 'active' : ''}>1</div>
         <div className={step >= 2 ? 'active' : ''}>2</div>
@@ -36,6 +57,7 @@ setStep(step-1);
           onClick={handleNextClick}
         >Next</button>
       </div>
+
     </div>
   );
 }
