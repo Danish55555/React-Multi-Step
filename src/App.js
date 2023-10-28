@@ -17,12 +17,12 @@ export default function App() {
   ];
   const handlePreviousClick = () => {
     if (step > 1) {
-      setStep(step - 1);
+      setStep((currStep) => currStep - 1);
     }
   }
   const handleNextClick = () => {
     if (step < 3) {
-      setStep(step + 1);
+      setStep((currStep) => currStep + 1);
     }
   }
   const handleUserChange = (e) => {
@@ -33,7 +33,7 @@ export default function App() {
 
   return (
     <>
-      <button className="close" onClick={() => { setIsOpen(!isOpen) }}>{isOpen ? <span >&times;</span> : <span style={{ fontSize: '20px' }}>Click to View Multi Step</span>}</button>
+      <button className="close" onClick={() => { setIsOpen((isOp) => !isOp) }}>{isOpen ? <span >&times;</span> : <span style={{ fontSize: '20px' }}>Click to View Multi Step</span>}</button>
       {isOpen && (
 
         <div className="steps">
